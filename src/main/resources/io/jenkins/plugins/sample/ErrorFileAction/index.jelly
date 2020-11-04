@@ -1,0 +1,12 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout" xmlns:st="jelly:stapler">
+    <l:layout title="Response File">
+        <l:main-panel>
+            <ul style="list-style-type: none;">
+                <j:forEach items="${it.content}" var="i">
+                    <li style="color:black; font-weight: bold; font-size: 18px">${i}</li>
+                </j:forEach>
+            </ul>
+        </l:main-panel>
+    </l:layout>
+</j:jelly>
