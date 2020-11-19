@@ -2,12 +2,15 @@ package io.jenkins.plugins.sample;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,7 +20,7 @@ import java.util.List;
 public class CustomRequest {
     private final URL url;
 
-    public CustomRequest(String url) throws IOException {
+    public CustomRequest(String url) throws MalformedURLException {
         this.url = new URL (url);
     }
 
@@ -31,17 +34,15 @@ public class CustomRequest {
     }
 
     private String listToJson(List<Solution> list) {
-        String json = "[";
-        int counter = 0;
+        JSONArray arr = new JSONArray();
         for(Solution s: list) {
-            counter++;
-            if(counter == list.size()) {
-                json += s + "]";
-            } else {
-                json += s + ",";
-            }
+            JSONObject obj = new JSONObject();
+            obj.put("id", s.getId());
+            obj.put("error", s.getError());
+            obj.put("solution", s.getSolution());
+            arr.add(obj);
         }
-        return json;
+        return arr.toString();
     }
 
     private List<Solution> jsonToList(String json) throws JsonProcessingException {
