@@ -99,7 +99,6 @@ public class ErrorDetectionPostBuilder extends Recorder {
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        distinctLogList();
     }
 
     private List<Solution> createSolutionList() {
