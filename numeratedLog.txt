@@ -1,0 +1,67 @@
+1 # Started by user unknown or anonymous
+2 # Running as SYSTEM
+3 # Building in workspace C\Users\TCIUNLU\Desktop\IoD\Jenkins Plugin\demo-plugin\work\jobs\demo-1\workspace
+4 # The recommended git tool is NONE
+5 # No credentials specified
+6 #  > git.exe rev-parse --is-inside-work-tree # timeout10
+7 # Fetching changes from the remote Git repository
+8 #  > git.exe config remote.origin.url httpsgithub.comiunnlumaven-demo.git # timeout10
+9 # Fetching upstream changes from httpsgithub.comiunnlumaven-demo.git
+10 #  > git.exe --version # timeout10
+11 #  > git --version # 'git version 2.28.0.windows.1'
+12 #  > git.exe fetch --tags --force --progress -- httpsgithub.comiunnlumaven-demo.git +refsheads*refsremotesorigin* # timeout10
+13 #  > git.exe rev-parse "refsremotesoriginmaster^{commit}" # timeout10
+14 # Checking out Revision cbc758f6e5a2ae182fd90a8d6f9f1743d87efef6 (refsremotesoriginmaster)
+15 #  > git.exe config core.sparsecheckout # timeout10
+16 #  > git.exe checkout -f cbc758f6e5a2ae182fd90a8d6f9f1743d87efef6 # timeout10
+17 # Commit message "classnotfoundexp hatasi"
+18 #  > git.exe rev-list --no-walk cbc758f6e5a2ae182fd90a8d6f9f1743d87efef6 # timeout10
+19 # [workspace] $ cmd.exe C '""D\Program Files\apache-maven-3.6.3\bin\mvn.cmd"' compile execjava -Dexec.mainClasscom.turkcell.Main && exit %%ERRORLEVEL%%"
+20 # [INFO] Scanning for projects...
+21 # [INFO] 
+22 # [INFO] ---------------------< org.examplemaven-example >----------------------
+23 # [INFO] Building maven-example 1.0-SNAPSHOT
+24 # [INFO] --------------------------------[ jar ]---------------------------------
+25 # [INFO] 
+26 # [INFO] --- maven-resources-plugin2.6resources (default-resources) @ maven-example ---
+27 # [WARNING] Using platform encoding (Cp1254 actually) to copy filtered resources, i.e. build is platform dependent!
+28 # [INFO] skip non existing resourceDirectory C\Users\TCIUNLU\Desktop\IoD\Jenkins Plugin\demo-plugin\work\jobs\demo-1\workspace\src\main\resources
+29 # [INFO] 
+30 # [INFO] --- maven-compiler-plugin3.1compile (default-compile) @ maven-example ---
+31 # [INFO] Changes detected - recompiling the module!
+32 # [WARNING] File encoding has not been set, using platform encoding Cp1254, i.e. build is platform dependent!
+33 # [INFO] Compiling 1 source file to C\Users\TCIUNLU\Desktop\IoD\Jenkins Plugin\demo-plugin\work\jobs\demo-1\workspace\target\classes
+34 # [INFO] -------------------------------------------------------------
+35 # [ERROR] COMPILATION ERROR  
+36 # [INFO] -------------------------------------------------------------
+37 # [ERROR] CUsersTCIUNLUDesktopIoDJenkins Plugindemo-pluginworkjobsdemo-1workspacesrcmainjavacomturkcellMain.java[6,9] cannot find symbol
+38 #   symbol   class Customer
+39 #   location class com.turkcell.Main
+40 # [ERROR] CUsersTCIUNLUDesktopIoDJenkins Plugindemo-pluginworkjobsdemo-1workspacesrcmainjavacomturkcellMain.java[6,26] cannot find symbol
+41 #   symbol   class Customer
+42 #   location class com.turkcell.Main
+43 # [INFO] 2 errors 
+44 # [INFO] -------------------------------------------------------------
+45 # [INFO] ------------------------------------------------------------------------
+46 # [INFO] BUILD FAILURE
+47 # [INFO] ------------------------------------------------------------------------
+48 # [INFO] Total time  3.909 s
+49 # [INFO] Finished at 2020-11-24T165703+0300
+50 # [INFO] ------------------------------------------------------------------------
+51 # [WARNING] The requested profile "consume-incrementals" could not be activated because it does not exist.
+52 # [WARNING] The requested profile "might-produce-incrementals" could not be activated because it does not exist.
+53 # [ERROR] Failed to execute goal org.apache.maven.pluginsmaven-compiler-plugin3.1compile (default-compile) on project maven-example Compilation failure Compilation failure 
+54 # [ERROR] CUsersTCIUNLUDesktopIoDJenkins Plugindemo-pluginworkjobsdemo-1workspacesrcmainjavacomturkcellMain.java[6,9] cannot find symbol
+55 # [ERROR]   symbol   class Customer
+56 # [ERROR]   location class com.turkcell.Main
+57 # [ERROR] CUsersTCIUNLUDesktopIoDJenkins Plugindemo-pluginworkjobsdemo-1workspacesrcmainjavacomturkcellMain.java[6,26] cannot find symbol
+58 # [ERROR]   symbol   class Customer
+59 # [ERROR]   location class com.turkcell.Main
+60 # [ERROR] -> [Help 1]
+61 # [ERROR] 
+62 # [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+63 # [ERROR] Re-run Maven using the -X switch to enable full debug logging.
+64 # [ERROR] 
+65 # [ERROR] For more information about the errors and possible solutions, please read the following articles
+66 # [ERROR] [Help 1] httpcwiki.apache.orgconfluencedisplayMAVENMojoFailureException
+67 # Build step 'Invoke top-level Maven targets' marked build as failure
