@@ -18,6 +18,8 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+//TODO - Error parsing yaparken hatalı parsing işlemi yapıyor. Kontrol et
+
 public class ErrorDetectionPostBuilder extends Recorder {
     private final String apiURL;
     private ArrayList<String> logList;
