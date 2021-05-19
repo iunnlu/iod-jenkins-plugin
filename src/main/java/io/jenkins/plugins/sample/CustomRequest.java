@@ -1,70 +1,64 @@
 package io.jenkins.plugins.sample;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.net.*;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.util.Map;
 
 public class CustomRequest {
-    private final URL url;
+    private final String url;
+    private static final HttpClient httpClient = HttpClient.newBuilder()
+            .version(HttpClient.Version.HTTP_2)
+            .connectTimeout(Duration.ofSeconds(10))
+            .build();
 
     public CustomRequest(String url) throws MalformedURLException {
-        this.url = new URL (url);
+        this.url = url;
     }
 
-    private HttpURLConnection openConnection(String method) throws IOException {
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod(method);
-        con.setRequestProperty("Content-Type", "application/json; utf-8");
-        con.setRequestProperty("Accept", "application/json");
-        con.setDoOutput(true);
-        return con;
+    private HttpRequest openConnection(Map<Object, Object> data) throws IOException {
+        return HttpRequest.newBuilder()
+                .POST(ofFormData(data))
+                .uri(URI.create(this.url))
+                .setHeader("User-Agent", "Java 11 HttpClient Bot")
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .build();
     }
 
-    private String listToJson(List<Solution> list) {
-        JSONArray arr = new JSONArray();
-        for(Solution s: list) {
-            JSONObject obj = new JSONObject();
-            obj.put("id", s.getId());
-            obj.put("error", s.getError());
-            obj.put("solution", s.getSolution());
-            arr.add(obj);
-        }
-        return arr.toString();
+    private HttpRequest openConnection(String data, String token) throws IOException {
+        return HttpRequest.newBuilder()
+                .POST(HttpRequest.BodyPublishers.ofString(data))
+                .uri(URI.create(this.url))
+                .setHeader("User-Agent", "Java 11 HttpClient Bot")
+                .setHeader("Authorization", "Bearer " + token)
+                .header("Content-Type", "text/plain")
+                .build();
     }
 
-    private List<Solution> jsonToList(String json) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        List<Solution> list = Arrays.asList(mapper.readValue(json, Solution[].class));
-        return list;
-    }
-
-    public List<Solution> postRequest(List<Solution> list) throws IOException {
-        HttpURLConnection con = openConnection("POST");
-        StringBuilder response = new StringBuilder();
-        String json = listToJson(list);
-        try (OutputStream os = con.getOutputStream()) {
-            byte[] input = json.getBytes("utf-8");
-            os.write(input, 0, input.length);
-        }
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
-            String responseLine = null;
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
+    public HttpRequest.BodyPublisher ofFormData(Map<Object, Object> data) {
+        StringBuilder builder = new StringBuilder();
+        for (Map.Entry<Object, Object> entry : data.entrySet()) {
+            if (builder.length() > 0) {
+                builder.append("&");
             }
+            builder.append(URLEncoder.encode(entry.getKey().toString(), StandardCharsets.UTF_8));
+            builder.append("=");
+            builder.append(URLEncoder.encode(entry.getValue().toString(), StandardCharsets.UTF_8));
         }
-        return jsonToList(response.toString());
+        return HttpRequest.BodyPublishers.ofString(builder.toString());
+    }
+
+    public String post(Map<Object, Object> data) throws InterruptedException, IOException {
+        HttpResponse<String> response = httpClient.send(openConnection(data), HttpResponse.BodyHandlers.ofString());
+        return response.body();
+    }
+
+    public String post(String data, String token) throws InterruptedException, IOException {
+        HttpResponse<String> response = httpClient.send(openConnection(data, token), HttpResponse.BodyHandlers.ofString());
+        return response.body();
     }
 }

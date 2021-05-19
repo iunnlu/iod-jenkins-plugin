@@ -1,18 +1,16 @@
 package io.jenkins.plugins.sample;
 
 import hudson.model.Action;
-
-import java.util.ArrayList;
-import java.util.List;
+import io.jenkins.plugins.sample.dto.PredictDto;
 
 public class ErrorFileAction implements Action {
-    private List content;
+    private PredictDto content;
 
-    public ErrorFileAction(List<Solution> content) {
+    public ErrorFileAction(PredictDto content) {
         this.content = content;
     }
 
-    public List getContent() {
+    public PredictDto getContent() {
         return content;
     }
 
